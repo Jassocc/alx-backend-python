@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" 
+"""
 script for task 5
 """
 from typing import List
