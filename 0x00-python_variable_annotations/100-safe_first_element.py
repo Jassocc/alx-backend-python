@@ -5,7 +5,7 @@ script for task 10
 from typing import Union, Any, Sequence
 
 
-def safe_first_element(lst: Sequence) -> Union[Any, None]:
+def safe_first_element(lst: Sequence[Any]) -> Union[Any, None]:
     """
     task 10 script
     """
