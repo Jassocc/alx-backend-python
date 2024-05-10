@@ -44,6 +44,8 @@ class TestGetJson(unittest.TestCase):
     """
     test the get json
     """
+    @parameterized.expand([("http://example.com", {
+        "payload": True}), ("http://holberton.io", {"payload": False})])
     def test_get_json(
             self, test_url: str,
             test_payload: Dict) -> None:
