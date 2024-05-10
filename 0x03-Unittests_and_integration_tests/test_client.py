@@ -69,15 +69,18 @@ class TestGithubOrgClient(unittest.TestCase):
         result = client.has_license(repo, key)
         self.assertEqual(ret, result)
 
-@parameterized_class(("org_payload", "repos_payload",
-                      "expected_repos", "apache2_repos"), TEST_PAYLOAD)
+@parameterized_class([{"org_payload": TEST_PAYLOAD[0][0],
+                      "repos_payload": TEST_PAYLOAD[0][1],
+                      "expected_repos": TEST_PAYLOAD[0][2],
+                      "apache2_repos": TEST_PAYLOAD[0][3]},
+                      ])
 class TestIntegrationGithubOrgClient(unittest.TestCase):
     """
     class that tests integration
     """
 
     @classmethod
-    def setUpClass(cls):
+    def setUpClass(cls) -> None:
         """
         prepares for testing
         """
@@ -97,7 +100,7 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         cls.get_patcher.start()
 
     @classmethod
-    def tearDownClass(cls):
+    def tearDownClass(cls) -> None:
         """
         deletes after testing
         """
@@ -108,7 +111,7 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         test the clients repos
         """
         result = GithubOrgClient("google")
-        self.assertTrue(result.public_repos(), self.expected_repos)
+        self.assertEqual(result.public_repos(), self.expected_repos)
 
     def test_public_repos_with_license(self) -> None:
         """
