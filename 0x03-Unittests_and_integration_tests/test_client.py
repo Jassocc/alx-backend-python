@@ -7,7 +7,7 @@ from parameterized import parameterized, parameterized_class
 from client import GithubOrgClient
 from unittest.mock import patch, PropertyMock, Mock, MagicMock
 from fixtures import TEST_PAYLOAD
-from urllib.error import HTTPError
+from requests import HTTPError
 from typing import Dict
 
 
