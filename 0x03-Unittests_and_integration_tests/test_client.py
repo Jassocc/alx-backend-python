@@ -81,7 +81,19 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         """
         prepares for testing
         """
-        cls.get_patcher = patch('requests.get', side_effect=HTTPError)
+        route_pay = {
+                'https://api.github.com/orgs/google': cls.org_payload,
+                'https://api.github.com/orgs/google/repos': cls.repos_payload}
+
+        def get_payload(url):
+            """
+            gets the payload
+            """
+            if url in route_payload:
+                return Mock(**{'json.return_value': route_payload[url]})
+            return HTTPError
+
+        cls.get_patcher = patch('requests.get', side_effect=get_payload)
         cls.get_patcher.start()
 
     @classmethod
