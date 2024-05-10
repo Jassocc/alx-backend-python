@@ -47,12 +47,12 @@ class TestGithubOrgClient(unittest.TestCase):
         """
         with patch.object(GithubOrgClient, '_public_repos_url',
                           new_callable=PropertyMock,
-                          return_value="https://api.github.com/") as rep:
+                          return_value="(link unavailable)") as rep:
             client = GithubOrgClient("Test value")
             result = client.public_repos()
             self.assertEqual(result, ["Test value"])
-            mock.assert_called_once
-            rep.assert_called_once
+            mock.assert_called_once()
+            rep.assert_called_once()
 
     @parameterized.expand([
         ({"license": {"key": "my_license"}}, "my_license", True),
