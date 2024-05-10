@@ -50,7 +50,7 @@ class TestGithubOrgClient(unittest.TestCase):
                           return_value="(link unavailable)") as rep:
             client = GithubOrgClient("Test value")
             result = client.public_repos()
-            self.assertEqual(result, ["Test value"])
+            self.assertEqual(result, [{"name": "Test value"}])
             mock.assert_called_once()
             rep.assert_called_once()
 
