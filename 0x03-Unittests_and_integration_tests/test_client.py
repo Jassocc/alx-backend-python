@@ -5,9 +5,10 @@ module for testing
 from unittest import TestCase
 from parameterized import parameterized, parameterized_class
 from client import GithubOrgClient
-from unittest.mock import patch, PropertyMock, Mock
+from unittest.mock import patch, PropertyMock, Mock, MagicMock
 from fixtures import TEST_PAYLOAD
 from urllib.error import HTTPError
+from typing import Dict
 
 
 class TestGithubOrgClient(unittest.TestCase):
@@ -15,17 +16,18 @@ class TestGithubOrgClient(unittest.TestCase):
     tests the client
     """
     @parameterized.expand([
-        ("google"), ("abc")
+        ("google", {'login': "google"}), ("abc", {'login': "abc"}),
     ])
-    @patch('client.get_json', return_value={"payload": True})
-    def test_org(self, org_name, mock):
+    @patch('client.get_json')
+    def test_org(self, org_name: str, res: Dict, mock: MagicMock) -> None:
         """
         test the github client
         """
+        mock.return_value = MagicMock(return_value=res)
         client = GithubOrgClient(org_name)
-        result = client.org
-        self.assertEqual(result, mock.return_value)
-        mock.assert_called_once()
+        self.assertEqual(client.org(), res)
+        mock.assert_called_once_with(
+                "https://api.github.com/orgs/{}".format(org_name))
 
     def test_public_repos_url(self):
         """
