@@ -76,7 +76,7 @@ class TestMemoize(unittest.TestCase):
                 return self.a_method()
         with patch.object(
                 TestClass, "a_method",
-                return_value=42) as memo_fix:
+                return_value=lambda: 42) as memo_fix:
             test_cl = TestClass()
             self.assertEqual(test_cl.a_property(), 42)
             self.assertEqual(test_cl.a_property(), 42)
