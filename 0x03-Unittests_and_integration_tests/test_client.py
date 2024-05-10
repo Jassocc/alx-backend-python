@@ -18,15 +18,16 @@ class TestGithubOrgClient(unittest.TestCase):
     @parameterized.expand([
         ("google", {'login': "google"}), ("abc", {'login': "abc"}),
     ])
-    @patch('client.get_json')
-    def test_org(self, org_name: str, res: Dict, mock: MagicMock) -> None:
+    @patch('client.get_json', return_value=None)
+    def test_org(self, org_name: str, res: Dict, mock_get: MagicMock) -> None:
         """
         test the github client
         """
-        mock.return_value = MagicMock(return_value=res)
+        mock_get.return_value = res
         client = GithubOrgClient(org_name)
-        self.assertEqual(client.org(), res)
-        mock.assert_called_once_with(
+        result = client.org()
+        self.assertEqual(result, res)
+        mock_get.assert_called_once_with(
                 "https://api.github.com/orgs/{}".format(org_name))
 
     def test_public_repos_url(self):
