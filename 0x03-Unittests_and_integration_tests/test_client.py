@@ -2,7 +2,7 @@
 """
 module for testing
 """
-from unittest import TestCase
+import unittest
 from parameterized import parameterized, parameterized_class
 from client import GithubOrgClient
 from unittest.mock import patch, PropertyMock, Mock, MagicMock
